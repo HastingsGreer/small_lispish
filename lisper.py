@@ -11,7 +11,12 @@ class LispState:
         function = s_expr[0]
         args = s_expr[1:]
 
-        return self.eval(function)(args, self)
+        function = self.eval(function)
+
+        if type(function) == LispFunction:
+            return function.lisp_function_call(args, self)
+
+        return function(args, self)
 
     def eval(self, term):
         if type(term) == str:
@@ -39,17 +44,25 @@ def subtract(args, state):
 def equal(args, state):
     return state.eval(args[0]) == state.eval(args[1])
 
+class LispFunction():
+    def __init__(self, inner_args, body, state):
+        self.inner_args = inner_args
+        self.body = body
+        self.state = state
+    def lisp_function_call(self, newargs, caller_state):
+        inner_state = LispState(old_state = self.state)
+        for name, val in zip(self.inner_args, newargs):
+            inner_state.variables[name] = caller_state.eval(val)
+        return inner_state.eval(self.body)
+
 def defun(args, state):
     name = args[0]
     inner_args = args[1]
     body = args[2]
 
-    def call(newargs, caller_state):
-        inner_state = LispState(old_state=state)
-        for name, val in zip(inner_args, newargs):
-            inner_state.variables[name] = caller_state.eval(val)
-        return inner_state.eval(body)
-    state.variables[name] = call
+    lisp_function = LispFunction(inner_args, body, state)
+
+    state.variables[name] = lisp_function
 
 def if_(args, state):
     condition = state.eval(args[0])
