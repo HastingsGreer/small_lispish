@@ -1,5 +1,5 @@
 (
-    do 
+    progn 
     (prints try doubling function)
     (defun double (x) (+ x x)) 
     (printv (double 1))
@@ -22,7 +22,7 @@
     (
         defun list (head body) 
         (
-            do
+            progn
             (
                 defun returned_list (index)
                 (
@@ -39,7 +39,7 @@
     (
         defun tail (the_list)
         (
-            do
+            progn
             (
                 defun returned_tail (index)
                 (the_list (+ index 1))
@@ -73,7 +73,7 @@
             if (= a_list nil)
             nil
             (
-                do 
+                progn 
                 (printv (a_list 0))
                 (print_list (tail a_list))
             )

@@ -70,12 +70,12 @@ def if_(args, state):
         return state.eval(args[1])
     return state.eval(args[2])
 
-def do(args, state):
+def progn(args, state):
     for arg in args:
         res = state.eval(arg)
     return res
 
-stdlib = {"+": add, "-": subtract, "=":equal, "defun":defun, "do":do, "if":if_, "prints": prints, "printv":printv, "nil": None, "setv": setv}
+stdlib = {"+": add, "-": subtract, "=":equal, "defun":defun, "progn":progn, "if":if_, "prints": prints, "printv":printv, "nil": None, "setv": setv}
 
 state = LispState()
 
