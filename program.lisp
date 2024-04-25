@@ -17,7 +17,7 @@
     ) 
     (prints try multiplication)
     (printv  (multiply 6 7))
-    (prints To demonstrate the power of this subset we define ML style lists)
+    (prints To demonstrate the power of this subset we hack lists into existance out of closures)
     (prints A list is a function that returns its nth element or nil if it is length n)
     (
         defun list (head body) 
@@ -66,7 +66,7 @@
     (printv (mylist 2))
     (prints try tail function)
     (printv ((tail mylist) 0))
-    (prints can we print a list?)
+    (prints can we print a whole list at once?)
     (
         defun print_list (a_list)
         (
@@ -80,7 +80,7 @@
         )
     )
     (print_list mylist)
-    (prints Can we reverse a list?)
+    (prints Try adding elements to end)
     (
             defun put_end (the_list value)
             (
@@ -90,10 +90,10 @@
                 (list (the_list 0) (put_end (tail the_list) value))
             )
     )
-    (setv list_end_8 (put_end mylist 8))
-    (setv list_end_9 (put_end list_end_8 9))
-    (prints Try adding elements to end)
-    (print_list list_end_9)
+    (setv list_end_eight (put_end mylist 8))
+    (setv list_end_nine (put_end list_end_eight 9))
+    (print_list list_end_nine)
+    (prints Can we reverse a list?)
     (
         defun reverse_list (the_list)
         (
@@ -103,7 +103,7 @@
             (put_end (reverse_list (tail the_list)) (the_list 0))
         )
     )
-    (prints reverse list and print it)
-    (setv reversed_list (reverse_list list_end_9))
+    (setv reversed_list (reverse_list list_end_nine))
     (print_list reversed_list)
+    retnil
 )
